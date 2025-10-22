@@ -48,7 +48,7 @@ class Trajectory:
         plt.plot(self.position[:, 0], self.position[:, 1])
         plt.show()
 
-    def plot_completed_mission(self, mission: Mission, ax=None, show=True):
+    def plot_completed_mission(self, mission: Mission, ax=None, show=True, label='Trajectory'):
         if ax is None:
             ax = plt.gca()
     
@@ -61,7 +61,7 @@ class Trajectory:
                      color='saddlebrown', alpha=0.3)
         ax.fill_between(x_values, max_height*np.ones(len(x_values)), mission.cave_height, 
                      color='saddlebrown', alpha=0.3)
-        ax.plot(self.position[:, 0], self.position[:, 1], label='Trajectory')
+        ax.plot(self.position[:, 0], self.position[:, 1], label=label)
         ax.plot(mission.reference, 'r', linestyle='--', label='Reference')
         ax.legend(loc='upper right')
     

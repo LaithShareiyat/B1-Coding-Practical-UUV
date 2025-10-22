@@ -48,20 +48,25 @@ class Trajectory:
         plt.plot(self.position[:, 0], self.position[:, 1])
         plt.show()
 
-    def plot_completed_mission(self, mission: Mission):
+    def plot_completed_mission(self, mission: Mission, ax=None, show=True):
+        if ax is None:
+            ax = plt.gca()
+    
         x_values = np.arange(len(mission.reference))
         min_depth = np.min(mission.cave_depth)
         max_height = np.max(mission.cave_height)
 
-        plt.fill_between(x_values, mission.cave_height, mission.cave_depth, color='blue', alpha=0.3)
-        plt.fill_between(x_values, mission.cave_depth, min_depth*np.ones(len(x_values)), 
-                         color='saddlebrown', alpha=0.3)
-        plt.fill_between(x_values, max_height*np.ones(len(x_values)), mission.cave_height, 
-                         color='saddlebrown', alpha=0.3)
-        plt.plot(self.position[:, 0], self.position[:, 1], label='Trajectory')
-        plt.plot(mission.reference, 'r', linestyle='--', label='Reference')
-        plt.legend(loc='upper right')
-        plt.show()
+        ax.fill_between(x_values, mission.cave_height, mission.cave_depth, color='blue', alpha=0.3)
+        ax.fill_between(x_values, mission.cave_depth, min_depth*np.ones(len(x_values)), 
+                     color='saddlebrown', alpha=0.3)
+        ax.fill_between(x_values, max_height*np.ones(len(x_values)), mission.cave_height, 
+                     color='saddlebrown', alpha=0.3)
+        ax.plot(self.position[:, 0], self.position[:, 1], label='Trajectory')
+        ax.plot(mission.reference, 'r', linestyle='--', label='Reference')
+        ax.legend(loc='upper right')
+    
+        if show:
+            plt.show()
 
 @dataclass
 class Mission:
